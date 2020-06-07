@@ -1,0 +1,50 @@
+import otrosRodados.*
+import colores.*
+import pedidos.*
+
+
+test "Cachito puede satisfacer el pedido" {
+
+	const pedido1 = new PedidoDeTraslado()
+
+	const cachito = new ChevroletCorsa()
+	cachito.color(rojo)
+	
+	pedido1.coloresIncompatibles([azul, negro])
+	pedido1.distanciaARecorrer(960)
+	pedido1.cantidadDePasajeros(4)
+	pedido1.tiempoMaximo(8)
+	
+	assert.that(pedido1.puedeSatisfacer(cachito))
+
+}
+
+test "Cachito no puede satisfacer el pedido(color incompatible rojo)"{
+	
+	const pedido2 = new PedidoDeTraslado()
+	const cachito = new ChevroletCorsa()
+	cachito.color(rojo)
+	pedido2.coloresIncompatibles([azul, negro, rojo])
+	pedido2.distanciaARecorrer(960)
+	pedido2.cantidadDePasajeros(6)
+	pedido2.tiempoMaximo(8)
+	
+	assert.notThat(pedido2.puedeSatisfacer(cachito))
+}
+
+test "Cachito no puede satisfacer el pedido(tiempo maximo de 6 hrs)"{
+	
+	const pedido3 = new PedidoDeTraslado()
+	
+	const cachito = new ChevroletCorsa()
+	cachito.color(rojo)
+	
+	pedido3.coloresIncompatibles([azul, negro])
+	pedido3.distanciaARecorrer(960)
+	pedido3.cantidadDePasajeros(4)
+	pedido3.tiempoMaximo(6)
+	
+	assert.notThat(pedido3.puedeSatisfacer(cachito))
+	
+	
+}

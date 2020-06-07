@@ -1,0 +1,76 @@
+import dependencia.*
+import pedidos.*
+import otrosRodados.*
+import colores.*
+
+test " Registro de los pedidos de cada dependencia"{
+	
+	const pedido1 = new PedidoDeTraslado()
+	const autito1 = new ChevroletCorsa()
+	
+	// AUTITO 1 PUEDE SATISFACER AL PEDIDO 1, CUMPLE TODAS LAS CONDICIONES.
+	
+	autito1.color(rojo)
+	
+	pedido1.distanciaARecorrer(960) //kms a recorrer
+	pedido1.tiempoMaximo(8)
+	pedido1.cantidadDePasajeros(4)
+	pedido1.coloresIncompatibles([azul, negro])
+	
+	const pedido2 = new PedidoDeTraslado()
+	const autito2 = new ChevroletCorsa()
+	
+	/*AUTITO 2 NO PUEDE SATISFACER, NO CUMPLE LAS CONDICIONES. 
+	 *  *-SU COLOR ESTA INCOMPATIBLE,
+	 * 	*- LA CANTIDAD DE PASAJEROS ES 6 (CUANDO EL CORSA SOLO TIENE PARA 4)
+	*/
+	
+	autito2.color(rojo)
+	
+	pedido2.distanciaARecorrer(960)
+	pedido2.tiempoMaximo(8)
+	pedido2.cantidadDePasajeros(6)
+	pedido2.coloresIncompatibles([rojo,azul, negro])
+	
+	
+	const pedido3 = new PedidoDeTraslado()
+	const autito3 = new ChevroletCorsa()
+	
+	/*AUTITO 3 NO PUEDE SATISFACER, NO CUMPLE LAS CONDICIONES. 
+	 *  *-SU COLOR ESTA INCOMPATIBLE,
+	 * 	*- LA CANTIDAD DE PASAJEROS ES 6 (CUANDO EL CORSA SOLO TIENE PARA 4)
+	 *  *- TIEMPO MAXIMO ES 6, LO QUE DA A LA VELOCIDAD REQUERIDA DE 160.
+	*/
+	
+	autito3.color(rojo)
+	
+	pedido3.distanciaARecorrer(960)
+	pedido3.tiempoMaximo(6)
+	pedido3.cantidadDePasajeros(6)
+	pedido3.coloresIncompatibles([rojo,azul, negro])
+	
+	
+	dependencia.agregarAFlota(autito1)
+	dependencia.agregarAFlota(autito2)
+	dependencia.agregarAFlota(autito3)
+	
+	dependencia.pedido([pedido1, pedido2, pedido3])
+	
+	
+	
+	/* LA SUMA DE TODOS LOS PASAJEROS DE LOS 3 PEDIDOS */
+		assert.equals(16, dependencia.totalDePasajeros())
+	
+	
+	/* CUALES DE LOS PEDIDOS NO PUEDEN SER SATISFECHOS, COMO EL PEDIDO1 SI PUEDE, LOS DEMAS NO  */
+		assert.equals([pedido2, pedido3],dependencia.pedidosInsatisfechos())
+	
+	/* DADO EL AZUL, TODOS LOS PEDIDOS TIENEN ESE COLOR INCOMPATIBLE */
+		assert.that(dependencia.colorIncompatible(azul))
+		
+	/* O BIEN DADO UN COLOR QUE NO ESTA EN TODOS LOS PEDIDOS */
+		assert.notThat(dependencia.colorIncompatible(rojo))
+	
+	
+
+}

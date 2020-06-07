@@ -1,7 +1,38 @@
 import wollok.game.*
+import otrosRodados.*
+import colores.*
+import keyboards.*
+
 
 program corsasEnElGame {
 	// hacer las inicializaciones necesarias 
+	game.title("Chevrolet Corsa en juego")
+	game.height(15)
+	game.width(15)
+
+	var corsa1 = new ChevroletCorsa()
+	corsa1.image(rojo.image())
+	
+	var corsa2 = new ChevroletCorsa()
+	corsa2.image(azul.image())
+	
+	var corsa3 = new ChevroletCorsa()
+	corsa3.image(verde.image())
+	
+
+	/* MODO ACTIVO */
+	
+	keyboard.num1().onPressDo{keyboards.agregarVehiculo(corsa1)} 
+	keyboard.num2().onPressDo{keyboards.agregarVehiculo(corsa2)} 
+	keyboard.num3().onPressDo{keyboards.agregarVehiculo(corsa3)}
+	
+		/* MODO TODOS DE UN COLOR Y MOVIMIENTO*/
+	const modoTodos = [corsa1, corsa2, corsa3]
+	
+	keyboard.r().onPressDo{keyboards.todosLosDe_DeColor_(modoTodos, rojo)}
+	keyboard.v().onPressDo{keyboards.todosLosDe_DeColor_(modoTodos, verde)}
+	keyboard.a().onPressDo{keyboards.todosLosDe_DeColor_(modoTodos, azul)}
+
 	
 	game.start()
 }

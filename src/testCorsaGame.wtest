@@ -1,0 +1,39 @@
+import otrosRodados.*
+import wollok.game.*
+
+
+test "Etapa 4: posiciones y Game" {
+
+	const chevroletClassic = new ChevroletCorsa()
+
+	chevroletClassic.cambiarPosicion(game.at(3,5))
+	chevroletClassic.cambiarPosicion(game.at(3,6))
+	chevroletClassic.cambiarPosicion(game.at(3,7))
+	chevroletClassic.cambiarPosicion(game.at(4,7))
+	
+	/* PASO POR LA POSICION */
+	
+	assert.that(chevroletClassic.pasoPor(game.at(3,5)))
+	
+	assert.that(chevroletClassic.pasoPor(game.at(3,6)))
+	
+	assert.notThat(chevroletClassic.pasoPor(game.at(4,5)))
+	
+	/* PASO POR LA FILA */
+	
+	// Fila 3 
+	assert.that(chevroletClassic.pasoPorFila(3))
+	
+	//Fila 4
+	assert.that(chevroletClassic.pasoPorFila(4))
+	
+	//Fila 5
+	assert.notThat(chevroletClassic.pasoPorFila(5))
+	
+	
+	/* RECORRIO FILAS */
+	
+	chevroletClassic.cambiarPosicion(game.at(5,7)) //AGREGO LA FILA 5
+	
+	assert.that(chevroletClassic.recorrioFilas([3,4,5]))
+}
